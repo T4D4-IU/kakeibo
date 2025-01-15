@@ -1,7 +1,7 @@
 use clap::Parser;
 
 #[derive(Parser)]
-#[clap(version = "1.0")]
+#[clap(version = "1.0", author = "T4D4")]
 struct Args {
     arg1: String,
     arg2: String,
