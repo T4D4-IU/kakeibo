@@ -22,5 +22,16 @@ enum Command {
 }
 
 fn main() {
-    let _args = App::parse();
+    let args = App::parse();
+    match args.command {
+        Command::New => new(),
+        Command::Deposit => unimplemented!(),
+        Command::Withdraw => unimplemented!(),
+        Command::Import => unimplemented!(),
+        Command::Report => unimplemented!(),
+    }
+}
+
+fn new() {
+    println!("新しい口座を作ります");
 }
