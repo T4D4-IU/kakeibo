@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use csv::Writer;
 
 #[derive(Parser)]
 #[clap(version = "1.0")]
@@ -33,5 +34,10 @@ fn main() {
 }
 
 fn new() {
-    println!("新しい口座を作ります");
+    // accounts.csvという名前でcsvファイルを作成
+    let mut writer = Writer::from_path("accounts.csv").unwrap();
+    writer
+        .write_record(["日付", "用途", "金額"]) // ヘッダーを書き込む
+        .unwrap();
+    writer.flush().unwrap();
 }
