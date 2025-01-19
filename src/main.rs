@@ -1,3 +1,4 @@
+use std::fs::OpenOptions;
 use clap::{Args, Parser, Subcommand};
 use csv::Writer;
 
@@ -48,7 +49,16 @@ fn main() {
 }
 
 fn deposit() {
-    println!("deposit");
+    // 追記モードでファイルを開く
+    let opne_option = OpenOptions::new()
+        .write(true)
+        .append(true) // <= 追記モード
+        .open("a.csv")
+        .unwrap();
+    // open_optionを利用した形でwriterを設定
+    let mut writer = Writer::from_writer(opne_option);
+    writer.write_record(["1", "2", "3"]).unwrap();
+    writer.flush().unwrap();
 }
 
 fn withdraw() {
