@@ -40,9 +40,17 @@ fn main() {
     let args = App::parse();
     match args.command {
         Command::New(args) => args.run(),
-        Command::Deposit => unimplemented!(),
-        Command::Withdraw => unimplemented!(),
+        Command::Deposit => deposit(),
+        Command::Withdraw => withdraw(),
         Command::Import => unimplemented!(),
         Command::Report => unimplemented!(),
     }
+}
+
+fn deposit() {
+    println!("deposit");
+}
+
+fn withdraw() {
+    println!("withdraw");
 }
