@@ -1,7 +1,7 @@
 use std::fs::OpenOptions;
 use chrono::NaiveDate;
 use clap::{Args, Parser, Subcommand};
-use csv::Writer;
+use csv::{Reader, Writer};
 
 #[derive(Parser)]
 #[clap(version = "1.0")]
@@ -98,7 +98,18 @@ struct ImportArgs {
 }
 impl ImportArgs {
     fn run(&self) {
-        unimplemented!();
+        let open_option = OpenOptions::new()
+            .write(true)
+            .append(true) // <= 追記モード
+            .open(format!("{}.csv", self.dst_account_name))
+            .unwrap();
+        let mut writer = Writer::from_writer(open_option);
+        let mut render = Reader::from_path(&self.src_file_name).unwrap();
+        for result in render.records() {
+            let record = result.unwrap();
+            writer.write_record(&record).unwrap();
+        }
+        writer.flush().unwrap();
     }
 }
 fn main() {
