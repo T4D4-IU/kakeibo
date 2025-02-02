@@ -19,7 +19,7 @@ enum Command {
     /// 口座から出金する
     Withdraw(WithdrawArgs),
     /// CSVからインポートする
-    Import,
+    Import(ImportArgs),
     /// レポートを出力する
     Report,
 }
@@ -91,13 +91,23 @@ impl WithdrawArgs {
             .unwrap();
     }
 }
+#[derive(Args)]
+struct ImportArgs {
+    src_file_name: String, // importするデータファイル
+    dst_account_name: String, // import先としてkakeiboで管理している口座名
+}
+impl ImportArgs {
+    fn run(&self) {
+        unimplemented!();
+    }
+}
 fn main() {
     let args = App::parse();
     match args.command {
         Command::New(args) => args.run(),
         Command::Deposit(args) => args.run(),
         Command::Withdraw(args) => args.run(),
-        Command::Import => unimplemented!(),
+        Command::Import(args) => args.run(),
         Command::Report => unimplemented!(),
     }
 }
