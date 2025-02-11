@@ -239,6 +239,7 @@ dependencies = [
  "chrono",
  "clap",
  "csv",
+ "serde",
 ]
 
 [[package]]
