@@ -129,6 +129,23 @@ struct Record {
 struct ReportArgs {
     files: Vec<String>,
 }
+impl ReportArgs {
+    fn run(&self) {
+        let mut map = HashMap::new();
+        for file in &self.files {
+            let mut reader = Reader::from_path(file).unwrap();
+            for result in reader.records() {
+                let record = result.unwrap();
+                let amount: i32 = record[2].parse().unwrap();
+                let date: NaiveDate = record[0].parse().unwrap();
+                let sum = map.entry(date.format("%Y-%m").to_string()).or_insert(0);
+                *sum += amount;
+            }
+        }
+        println!("{:?}", map);
+    }
+}
+
 fn main() {
     let args = App::parse();
     match args.command {
@@ -136,6 +153,6 @@ fn main() {
         Command::Deposit(args) => args.run(),
         Command::Withdraw(args) => args.run(),
         Command::Import(args) => args.run(),
-        Command::Report(_args) => unimplemented!(),
+        Command::Report(args) => args.run(),
     }
 }
